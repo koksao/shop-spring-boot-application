@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,34 +16,34 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "orders")
-public class Orders {
+public class OrdersEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_orderNumber_seq")
     private Long orderNumber;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductQuantity> products = new ArrayList<>();
+    private List<ProductQuantityEntity> products = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customers customer;
+    private CustomersEntity customer;
 
     private Double totalPrice;
 
-    public void addProductQuantity(ProductQuantity productQuantity){
-        products.add(productQuantity);
-        productQuantity.setOrder(this);
+    public void addProductQuantity(ProductQuantityEntity productQuantityEntity){
+        products.add(productQuantityEntity);
+        productQuantityEntity.setOrder(this);
     }
 
     @Override
     public boolean equals(Object o){
         if(this == o) return true;
         if(o == null || getClass() != o.getClass()) return false;
-        Orders orders = (Orders) o;
-        return Objects.equals(orderNumber,orders.orderNumber)&&
-                Objects.equals(products, orders.products)&&
-                Objects.equals(customer, orders.customer)&&
-                Objects.equals(totalPrice, orders.totalPrice);
+        OrdersEntity ordersEntity = (OrdersEntity) o;
+        return Objects.equals(orderNumber, ordersEntity.orderNumber)&&
+                Objects.equals(products, ordersEntity.products)&&
+                Objects.equals(customer, ordersEntity.customer)&&
+                Objects.equals(totalPrice, ordersEntity.totalPrice);
     }
 
     @Override
@@ -54,7 +53,7 @@ public class Orders {
 
     @Override
     public String toString() {
-        return "Orders{" +
+        return "OrdersEntity{" +
                 "orderNumber=" + orderNumber +
                 ", totalProducts=" + (products != null ? products.size() : 0) +
                 '}';

@@ -15,7 +15,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "productQuantity")
-public class ProductQuantity {
+public class ProductQuantityEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productQuantity_id_seq")
@@ -23,11 +23,11 @@ public class ProductQuantity {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private Orders order;
+    private OrdersEntity order;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    private Products product;
+    private ProductsEntity product;
 
     private int quantity;
 
@@ -35,7 +35,7 @@ public class ProductQuantity {
     public boolean equals(Object o){
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductQuantity that = (ProductQuantity) o;
+        ProductQuantityEntity that = (ProductQuantityEntity) o;
         return Objects.equals(quantity, that.quantity)&&
                 Objects.equals(product, that.product);
     }
@@ -46,7 +46,7 @@ public class ProductQuantity {
 
     @Override
     public String toString() {
-        return "ProductQuantity{" +
+        return "ProductQuantityEntity{" +
                 "id=" + id +
                 ", product=" + (product != null ? product.getClothes() : "null") +
                 ", quantity=" + quantity +

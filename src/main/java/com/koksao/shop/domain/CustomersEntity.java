@@ -14,7 +14,7 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "customers")
-public class Customers {
+public class CustomersEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customers_id_seq")
@@ -26,13 +26,13 @@ public class Customers {
 
     private String email;
 
-    private int phoneNumber;
+    private String phoneNumber;
 
     @Override
     public boolean equals(Object o){
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Customers customer = (Customers) o;
+        CustomersEntity customer = (CustomersEntity) o;
         return Objects.equals(id, customer.id) &&
                 Objects.equals(firstName, customer.firstName) &&
                 Objects.equals(lastName, customer.lastName) &&

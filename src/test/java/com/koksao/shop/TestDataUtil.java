@@ -1,92 +1,89 @@
 package com.koksao.shop;
 
-import com.koksao.shop.domain.Customers;
-import com.koksao.shop.domain.Orders;
-import com.koksao.shop.domain.ProductQuantity;
-import com.koksao.shop.domain.Products;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.koksao.shop.domain.CustomersEntity;
+import com.koksao.shop.domain.OrdersEntity;
+import com.koksao.shop.domain.ProductQuantityEntity;
+import com.koksao.shop.domain.ProductsEntity;
 
 public class TestDataUtil {
     private TestDataUtil() {
 
     }
 
-    public static Customers createTestCustomerA() {
-        return Customers.builder()
+    public static CustomersEntity createTestCustomerA() {
+        return CustomersEntity.builder()
                 .firstName("Robert")
                 .lastName("Makłowicz")
-                .phoneNumber(768464085)
+                .phoneNumber("768464085")
                 .email("robertoo11@gmail.com")
                 .build();
     }
 
-    public static Customers createTestCustomerB() {
-        return Customers.builder()
+    public static CustomersEntity createTestCustomerB() {
+        return CustomersEntity.builder()
                 .firstName("Robert")
                 .lastName("Makłowicz2")
-                .phoneNumber(768465585)
+                .phoneNumber("768465585")
                 .email("robertoo22@gmail.com")
                 .build();
     }
 
-    public static Customers createTestCustomerC() {
-        return Customers.builder()
+    public static CustomersEntity createTestCustomerC() {
+        return CustomersEntity.builder()
                 .firstName("Marcin")
                 .lastName("Pudzianowski")
-                .phoneNumber(763434099)
+                .phoneNumber("763434099")
                 .email("marcin22@gmail.com")
                 .build();
     }
 
-    public static Products createTestProductA() {
-        return Products.builder()
+    public static ProductsEntity createTestProductA() {
+        return ProductsEntity.builder()
                 .price(60)
                 .color("Pink")
-                .clothes(Products.Clothes.SHIRT)
-                .season(Products.Season.WINTER)
+                .clothes(ProductsEntity.Clothes.SHIRT)
+                .season(ProductsEntity.Season.WINTER)
                 .availability(90)
                 .build();
     }
 
-    public static Products createTestProductB() {
-        return Products.builder()
+    public static ProductsEntity createTestProductB() {
+        return ProductsEntity.builder()
                 .price(90)
                 .color("Black")
-                .clothes(Products.Clothes.SHIRT)
-                .season(Products.Season.WINTER)
+                .clothes(ProductsEntity.Clothes.SHIRT)
+                .season(ProductsEntity.Season.WINTER)
                 .availability(100)
                 .build();
     }
 
-    public static Products createTestProductC() {
-        return Products.builder()
+    public static ProductsEntity createTestProductC() {
+        return ProductsEntity.builder()
                 .price(20)
                 .color("Red")
-                .clothes(Products.Clothes.PANTS)
-                .season(Products.Season.SUMMER)
+                .clothes(ProductsEntity.Clothes.PANTS)
+                .season(ProductsEntity.Season.SUMMER)
                 .availability(100)
                 .build();
     }
 
-    public static ProductQuantity createTestProductQuantityA(Products product) {
-        return ProductQuantity.builder()
+    public static ProductQuantityEntity createTestProductQuantityA(ProductsEntity product) {
+        return ProductQuantityEntity.builder()
                 .product(product)
                 .quantity(15)
                 .build();
 
     }
-    public static ProductQuantity createTestProductQuantityB(Products product) {
-        return ProductQuantity.builder()
+    public static ProductQuantityEntity createTestProductQuantityB(ProductsEntity product) {
+        return ProductQuantityEntity.builder()
                 .product(product)
                 .quantity(9)
                 .build();
 
     }
 
-    public static Orders createTestOrderA(Customers customer){
-        return Orders.builder()
+    public static OrdersEntity createTestOrderA(CustomersEntity customer){
+        return OrdersEntity.builder()
                 .customer(customer)
                 .totalPrice(90.0)
                 .build();

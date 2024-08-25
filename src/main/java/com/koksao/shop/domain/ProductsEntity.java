@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Proxy;
 
 import java.util.Objects;
 
@@ -16,7 +15,7 @@ import java.util.Objects;
 @Entity
 //@Proxy(lazy = false)
 @Table(name = "products")
-public class Products {
+public class ProductsEntity {
 
     public enum Clothes{
         SHIRT,
@@ -48,7 +47,7 @@ public class Products {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Products product = (Products) o;
+        ProductsEntity product = (ProductsEntity) o;
         return Objects.equals(id, product.id) &&
                 Objects.equals(season, product.season) &&
                 Objects.equals(price, product.price) &&
