@@ -27,13 +27,12 @@ public class ProductsEntity {
         WINTER
     }
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "products_id_seq")
     private Long id;
 
     @Enumerated(EnumType.STRING)
     private Clothes clothes;
 
-    private int price;
+    private double price;
 
     private int availability;
 

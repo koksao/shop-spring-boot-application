@@ -17,7 +17,6 @@ import java.util.Objects;
 public class CustomersEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customers_id_seq")
     private Long id;
 
     private String firstName;

@@ -47,12 +47,9 @@ public class OrdersEntityRepositoryIntegrationTest {
         OrdersEntity order = TestDataUtil.createTestOrderA(customer);
         ProductQuantityEntity productQuantityEntity = TestDataUtil.createTestProductQuantityA(product);
         ProductQuantityEntity productQuantityEntity2 = TestDataUtil.createTestProductQuantityB(product2);
-        List<ProductQuantityEntity> list = new ArrayList<>();
-        order.setProducts(list);
-        order.addProductQuantity(productQuantityEntity);
-        order.addProductQuantity(productQuantityEntity2);
         underTest.save(order);
-
+        productQuantityEntity.setOrder(order);
+        productQuantityEntity2.setOrder(order);
         Optional<OrdersEntity> result = underTest.findById(order.getOrderNumber());
         assertThat(result).isPresent();
         assertThat(result.get()).usingRecursiveComparison().isEqualTo(order);

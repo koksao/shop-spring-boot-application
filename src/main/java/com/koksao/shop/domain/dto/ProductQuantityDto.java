@@ -1,5 +1,7 @@
 package com.koksao.shop.domain.dto;
 
+
+import com.koksao.shop.domain.ProductsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,15 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CustomersDto {
+public class ProductQuantityDto {
 
-    private Long id;
+    private Long productId;
 
-    private String firstName;
-
-    private String  lastName;
-
-    private String email;
-
-    private String phoneNumber;
+    private int quantity;
 }

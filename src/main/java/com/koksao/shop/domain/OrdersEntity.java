@@ -21,19 +21,10 @@ public class OrdersEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_orderNumber_seq")
     private Long orderNumber;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductQuantityEntity> products = new ArrayList<>();
-
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private CustomersEntity customer;
 
-    private Double totalPrice;
-
-    public void addProductQuantity(ProductQuantityEntity productQuantityEntity){
-        products.add(productQuantityEntity);
-        productQuantityEntity.setOrder(this);
-    }
 
     @Override
     public boolean equals(Object o){
@@ -41,21 +32,17 @@ public class OrdersEntity {
         if(o == null || getClass() != o.getClass()) return false;
         OrdersEntity ordersEntity = (OrdersEntity) o;
         return Objects.equals(orderNumber, ordersEntity.orderNumber)&&
-                Objects.equals(products, ordersEntity.products)&&
-                Objects.equals(customer, ordersEntity.customer)&&
-                Objects.equals(totalPrice, ordersEntity.totalPrice);
+                Objects.equals(customer, ordersEntity.customer);
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(orderNumber, products, customer, totalPrice);
+        return Objects.hash(orderNumber, customer);
     }
 
     @Override
     public String toString() {
         return "OrdersEntity{" +
-                "orderNumber=" + orderNumber +
-                ", totalProducts=" + (products != null ? products.size() : 0) +
-                '}';
+                "orderNumber=" + orderNumber;
     }
 }

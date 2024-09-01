@@ -28,7 +28,7 @@ public class ProductControllerIntegrationTests {
     @Autowired
     public ProductControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper){
         this.mockMvc = mockMvc;
-        this.objectMapper = objectMapper;
+        this.objectMapper = new ObjectMapper();
     }
 
     @Test
