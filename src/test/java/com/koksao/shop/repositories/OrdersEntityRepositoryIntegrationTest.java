@@ -66,10 +66,6 @@ public class OrdersEntityRepositoryIntegrationTest {
         OrdersEntity order = TestDataUtil.createTestOrderA(customer);
         ProductQuantityEntity productQuantityEntity = TestDataUtil.createTestProductQuantityA(product);
         ProductQuantityEntity productQuantityEntity2 = TestDataUtil.createTestProductQuantityB(product2);
-        List<ProductQuantityEntity> list = new ArrayList<>();
-        order.setProducts(list);
-        order.addProductQuantity(productQuantityEntity);
-        order.addProductQuantity(productQuantityEntity2);
         underTest.save(order);
         underTest.deleteById(order.getOrderNumber());
 

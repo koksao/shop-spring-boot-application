@@ -17,8 +17,6 @@ import java.util.List;
 @Builder
 public class OrdersDto {
 
-    private Long orderNumber;
-
     private Long customerId;
 
     private List<ProductQuantityDto> productsQuantities;
