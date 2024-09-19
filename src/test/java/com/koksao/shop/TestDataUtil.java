@@ -4,7 +4,7 @@ import com.koksao.shop.domain.CustomersEntity;
 import com.koksao.shop.domain.OrdersEntity;
 import com.koksao.shop.domain.ProductQuantityEntity;
 import com.koksao.shop.domain.ProductsEntity;
-import com.koksao.shop.domain.dto.OrdersDto;
+import com.koksao.shop.domain.dto.OrdersRequestDto;
 import com.koksao.shop.domain.dto.ProductQuantityDto;
 import com.koksao.shop.domain.dto.ProductsDto;
 
@@ -100,11 +100,11 @@ public class TestDataUtil {
                 .build();
     }
 
-    public static OrdersDto createTestOrderDtoA(ProductQuantityDto productQuantityDto1, ProductQuantityDto productQuantityDto2, CustomersEntity customer){
+    public static OrdersRequestDto createTestOrderDtoA(ProductQuantityDto productQuantityDto1, ProductQuantityDto productQuantityDto2, CustomersEntity customer){
         List<ProductQuantityDto> list = new ArrayList<>();
         list.add(productQuantityDto1);
         list.add(productQuantityDto2);
-            return OrdersDto.builder()
+            return OrdersRequestDto.builder()
                     .customerId(customer.getId())
                     .productsQuantities(list)
                     .build();

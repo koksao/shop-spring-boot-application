@@ -6,9 +6,13 @@ import com.koksao.shop.mappers.Mapper;
 import com.koksao.shop.services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class CustomersController {
@@ -26,5 +30,13 @@ public class CustomersController {
         CustomersEntity customerEntity = customersMapper.mapFrom(customer);
         CustomersEntity savedCustomerEntity = customerService.createCustomer(customerEntity);
         return new ResponseEntity<>(customersMapper.mapTo(savedCustomerEntity), HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "/customers")
+    public List<CustomersDto> listCustomers(){
+        List<CustomersEntity> customers = customerService.findAll();
+        return customers.stream()
+                .map(customersMapper::mapTo)
+                .collect(Collectors.toList());
     }
 }

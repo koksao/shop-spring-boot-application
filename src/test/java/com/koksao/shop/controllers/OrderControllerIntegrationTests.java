@@ -1,16 +1,12 @@
 package com.koksao.shop.controllers;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koksao.shop.TestDataUtil;
 import com.koksao.shop.domain.CustomersEntity;
-import com.koksao.shop.domain.OrdersEntity;
 import com.koksao.shop.domain.ProductsEntity;
-import com.koksao.shop.domain.dto.CustomersDto;
-import com.koksao.shop.domain.dto.OrdersDto;
+import com.koksao.shop.domain.dto.OrdersRequestDto;
 import com.koksao.shop.domain.dto.ProductQuantityDto;
-import com.koksao.shop.domain.dto.ProductsDto;
 import com.koksao.shop.repositories.CustomersRepository;
 import com.koksao.shop.repositories.ProductsRepository;
 import org.junit.jupiter.api.Test;
@@ -57,9 +53,9 @@ public class OrderControllerIntegrationTests {
         productsRepository.save(productA);
         productsRepository.save(productB);
 
-        OrdersDto ordersDto = TestDataUtil.createTestOrderDtoA(productQuantityA, productQuantityB, customer);
+        OrdersRequestDto ordersRequestDto = TestDataUtil.createTestOrderDtoA(productQuantityA, productQuantityB, customer);
 
-        String orderJson = objectMapper.writeValueAsString(ordersDto);
+        String orderJson = objectMapper.writeValueAsString(ordersRequestDto);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/orders")
@@ -68,6 +64,15 @@ public class OrderControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.status().isCreated()
         );
+    }
+
+    @Test
+    public void testThatListOrderReturnsHttp200() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 
 }

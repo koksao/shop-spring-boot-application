@@ -4,7 +4,7 @@ import com.koksao.shop.domain.CustomersEntity;
 import com.koksao.shop.domain.OrdersEntity;
 import com.koksao.shop.domain.ProductQuantityEntity;
 import com.koksao.shop.domain.ProductsEntity;
-import com.koksao.shop.domain.dto.OrdersDto;
+import com.koksao.shop.domain.dto.OrdersRequestDto;
 import com.koksao.shop.domain.dto.ProductQuantityDto;
 import com.koksao.shop.repositories.CustomersRepository;
 import com.koksao.shop.repositories.OrdersRepository;
@@ -13,7 +13,9 @@ import com.koksao.shop.repositories.ProductsRepository;
 import com.koksao.shop.services.OrderService;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -33,16 +35,16 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public OrdersEntity createOrder(OrdersDto ordersDto) {
-        CustomersEntity customer = customersRepository.findById(ordersDto.getCustomerId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid customer ID " + ordersDto.getCustomerId()));
+    public OrdersEntity createOrder(OrdersRequestDto ordersRequestDto) {
+        CustomersEntity customer = customersRepository.findById(ordersRequestDto.getCustomerId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid customer ID " + ordersRequestDto.getCustomerId()));
 
         OrdersEntity order = new OrdersEntity();
         order.setCustomer(customer);
 
         OrdersEntity savedOrder = ordersRepository.save(order);
 
-        for (ProductQuantityDto prqDto : ordersDto.getProductsQuantities()){
+        for (ProductQuantityDto prqDto : ordersRequestDto.getProductsQuantities()){
             ProductsEntity product = productsRepository.findById(prqDto.getProductId())
                     .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + prqDto.getProductId()));
 
@@ -55,5 +57,14 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return savedOrder;
+    }
+
+    @Override
+    public List<OrdersEntity> findAll() {
+        return StreamSupport.stream(ordersRepository
+                .findAll()
+                .spliterator(),
+                false)
+                .collect(Collectors.toList());
     }
 }

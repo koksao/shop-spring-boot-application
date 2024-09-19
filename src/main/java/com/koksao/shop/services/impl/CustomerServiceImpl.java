@@ -5,6 +5,10 @@ import com.koksao.shop.repositories.CustomersRepository;
 import com.koksao.shop.services.CustomerService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -18,6 +22,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomersEntity createCustomer(CustomersEntity customersEntity) {
         return customersRepository.save(customersEntity);
+    }
+
+    @Override
+    public List<CustomersEntity> findAll() {
+        return StreamSupport.stream(customersRepository
+                .findAll()
+                .spliterator(),
+                false)
+                .collect(Collectors.toList());
     }
 
 }
