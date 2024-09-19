@@ -79,4 +79,25 @@ public class CustomerControllerIntegrationTests {
 
     }
 
+    @Test
+    public void testThatGetCustomerReturnsHttpStatus200OkWhenCustomerExists() throws Exception {
+        CustomersEntity customer = TestDataUtil.createTestCustomerA();
+        customerService.createCustomer(customer);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/customers/" + customer.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatGetCustomerReturnsHttpStatus404OkWhenCustomerDoesntExists() throws Exception {
+        CustomersEntity customer = TestDataUtil.createTestCustomerA();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/customers/" + customer.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
 }

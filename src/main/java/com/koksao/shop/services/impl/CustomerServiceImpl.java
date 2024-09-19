@@ -6,6 +6,7 @@ import com.koksao.shop.services.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -31,6 +32,11 @@ public class CustomerServiceImpl implements CustomerService {
                 .spliterator(),
                 false)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<CustomersEntity> findOne(Long id) {
+      return customersRepository.findById(id);
     }
 
 }

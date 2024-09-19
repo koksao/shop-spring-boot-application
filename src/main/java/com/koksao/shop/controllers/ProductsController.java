@@ -6,12 +6,10 @@ import com.koksao.shop.mappers.Mapper;
 import com.koksao.shop.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -38,6 +36,15 @@ public class ProductsController {
         return products.stream()
                 .map(productsMapper::mapTo)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/products/{id}")
+    public ResponseEntity<ProductsDto> getProduct(@PathVariable("id") Long id){
+        Optional<ProductsEntity> foundProduct = productService.findOne(id);
+        return foundProduct.map(productsEntity -> {
+            ProductsDto productsDto = productsMapper.mapTo(productsEntity);
+            return new ResponseEntity<>(productsDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 

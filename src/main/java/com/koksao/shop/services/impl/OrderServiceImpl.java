@@ -14,6 +14,7 @@ import com.koksao.shop.services.OrderService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -66,5 +67,10 @@ public class OrderServiceImpl implements OrderService {
                 .spliterator(),
                 false)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<OrdersEntity> findOne(Long orderNumber) {
+        return ordersRepository.findById(orderNumber);
     }
 }

@@ -6,12 +6,10 @@ import com.koksao.shop.mappers.Mapper;
 import com.koksao.shop.services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -38,5 +36,14 @@ public class CustomersController {
         return customers.stream()
                 .map(customersMapper::mapTo)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/customers/{id}")
+    public ResponseEntity<CustomersDto> getCustomer(@PathVariable("id") Long id){
+        Optional<CustomersEntity> foundCustomer = customerService.findOne(id);
+        return foundCustomer.map(customersEntity -> {
+            CustomersDto customersDto = customersMapper.mapTo(customersEntity);
+            return new ResponseEntity<>(customersDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

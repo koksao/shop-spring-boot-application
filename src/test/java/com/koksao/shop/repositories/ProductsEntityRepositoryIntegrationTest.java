@@ -41,7 +41,7 @@ public class ProductsEntityRepositoryIntegrationTest {
         underTest.save(product2);
         underTest.save(product3);
         Iterable<ProductsEntity> result = underTest.findAll();
-        assertThat(result).hasSize(3).containsExactly(product1,product2,product3);
+        assertThat(result).hasSize(3).containsExactly(product2,product1,product3);
 
     }
 

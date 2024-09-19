@@ -83,6 +83,27 @@ public class ProductControllerIntegrationTests {
 
     }
 
+    @Test
+    public void testThatGetProductReturnsHttpStatus200OkWhenProductExists() throws Exception {
+        ProductsEntity productsEntity = TestDataUtil.createTestProductB();
+        productService.createProduct(productsEntity);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/products/" + productsEntity.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatGetProductReturnsHttpStatus404OkWhenProductDoesntExists() throws Exception {
+        ProductsEntity productsEntity = TestDataUtil.createTestProductB();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/products/" + productsEntity.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
 
 
 }

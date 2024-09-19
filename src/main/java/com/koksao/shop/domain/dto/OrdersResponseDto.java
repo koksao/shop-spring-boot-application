@@ -15,7 +15,7 @@ public class OrdersResponseDto {
 
     private Long orderNumber;
 
-    private String CustomerFirstName;
+    private String customerFirstName;
 
-    private String CustomerLastName;
+    private String customerLastName;
 }

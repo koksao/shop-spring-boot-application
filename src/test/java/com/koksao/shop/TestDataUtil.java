@@ -96,6 +96,7 @@ public class TestDataUtil {
 
     public static OrdersEntity createTestOrderA(CustomersEntity customer){
         return OrdersEntity.builder()
+                .orderNumber(4545L)
                 .customer(customer)
                 .build();
     }
