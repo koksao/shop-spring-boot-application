@@ -67,6 +67,16 @@ public class TestDataUtil {
                 .availability(100)
                 .build();
     }
+    public static ProductsDto createTestProductBDto() {
+        return ProductsDto.builder()
+                .id(6544L)
+                .price(90)
+                .color("Black")
+                .clothes(ProductsEntity.Clothes.SHIRT)
+                .season(ProductsEntity.Season.WINTER)
+                .availability(100)
+                .build();
+    }
 
     public static ProductsEntity createTestProductC() {
         return ProductsEntity.builder()

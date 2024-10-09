@@ -39,4 +39,14 @@ public class CustomerServiceImpl implements CustomerService {
       return customersRepository.findById(id);
     }
 
+    @Override
+    public boolean isExists(Long id) {
+        return customersRepository.existsById(id);
+    }
+
+    @Override
+    public void delete(Long id) {
+    customersRepository.deleteById(id);
+    }
+
 }

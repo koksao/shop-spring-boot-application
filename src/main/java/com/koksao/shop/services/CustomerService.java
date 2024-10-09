@@ -14,4 +14,8 @@ public interface CustomerService {
     List<CustomersEntity> findAll();
 
     Optional<CustomersEntity> findOne(Long id);
+
+    boolean isExists(Long id);
+
+    void delete(Long id);
 }

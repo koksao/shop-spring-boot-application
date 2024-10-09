@@ -73,4 +73,9 @@ public class OrderServiceImpl implements OrderService {
     public Optional<OrdersEntity> findOne(Long orderNumber) {
         return ordersRepository.findById(orderNumber);
     }
+
+    @Override
+    public boolean isExists(Long orderNumber) {
+        return ordersRepository.existsById(orderNumber);
+    }
 }

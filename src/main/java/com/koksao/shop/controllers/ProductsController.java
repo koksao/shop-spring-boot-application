@@ -47,6 +47,26 @@ public class ProductsController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @PutMapping(path = "/products/{id}")
+    public ResponseEntity<ProductsDto> fullUpdateProduct
+            (@PathVariable("id") Long id, @RequestBody ProductsDto productsDto){
+        if(!productService.isExists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
+        productsDto.setId(id);
+        ProductsEntity productsEntity = productsMapper.mapFrom(productsDto);
+        ProductsEntity savedProductsEntity = productService.createProduct(productsEntity);
+        return new ResponseEntity<>(
+                productsMapper.mapTo(savedProductsEntity),
+                HttpStatus.OK);
+
+    }
+
+    @DeleteMapping(path = "/products/{id}")
+    public ResponseEntity deleteProduct(@PathVariable("id") Long id){
+        productService.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 
 }

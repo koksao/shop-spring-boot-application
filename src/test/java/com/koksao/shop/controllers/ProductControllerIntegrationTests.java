@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koksao.shop.TestDataUtil;
 import com.koksao.shop.domain.CustomersEntity;
 import com.koksao.shop.domain.ProductsEntity;
+import com.koksao.shop.domain.dto.ProductsDto;
 import com.koksao.shop.services.ProductService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -102,6 +103,54 @@ public class ProductControllerIntegrationTests {
                 MockMvcRequestBuilders.get("/products/" + productsEntity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void testThatFullUpdateProductReturnsHttpStatus404WhenNoProductsExists() throws Exception {
+        ProductsDto productsDto = TestDataUtil.createTestProductDtoA();
+        String productsDtoJson = objectMapper.writeValueAsString(productsDto);
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/products/99")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productsDtoJson)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void testThatFullUpdateProductReturnsHttpStatus200WhenProductExists() throws Exception {
+        ProductsEntity productEntity = TestDataUtil.createTestProductB();
+        ProductsEntity savedProductEntity = productService.createProduct(productEntity);
+
+        ProductsDto productsDto = TestDataUtil.createTestProductBDto();
+        String productDtoJson = objectMapper.writeValueAsString(productsDto);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/products/" + savedProductEntity.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productDtoJson)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
+
+
+    @Test
+    public void TestThatDeleteProductReturnsHttpStatus204ForNotExistingProduct() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/products/999999")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void TestThatDeleteProductReturnsHttpStatus204ForExistingProduct() throws Exception {
+        ProductsEntity productsEntity = TestDataUtil.createTestProductB();
+        ProductsEntity savedProduct = productService.createProduct(productsEntity);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/products/" + savedProduct.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+
     }
 
 

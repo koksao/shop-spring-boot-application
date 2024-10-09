@@ -100,4 +100,25 @@ public class CustomerControllerIntegrationTests {
         ).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
+    @Test
+    public void testThatDeleteCustomerReturnsHttpStatus204ForNotExistingCustomer() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/customers/943934943")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+
+    }
+
+    @Test
+    public void testThatDeleteCustomerReturnsHttpStatus204ForExistingCustomer() throws Exception {
+       CustomersEntity customersEntity = TestDataUtil.createTestCustomerA();
+       CustomersEntity savedCustomer = customerService.createCustomer(customersEntity);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/customers/" + savedCustomer.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+
+    }
+
 }

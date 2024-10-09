@@ -13,4 +13,6 @@ public interface OrderService {
     List<OrdersEntity> findAll();
 
     Optional<OrdersEntity> findOne(Long orderNumber);
+
+    boolean isExists(Long orderNumber);
 }

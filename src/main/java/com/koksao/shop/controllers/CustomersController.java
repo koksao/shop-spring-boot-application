@@ -46,4 +46,24 @@ public class CustomersController {
             return new ResponseEntity<>(customersDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @PutMapping(path = "/customers/{id}")
+    public ResponseEntity<CustomersDto> fullUpdateCustomer
+            (@PathVariable("id") Long id, @RequestBody CustomersDto customersDto){
+    if(!customerService.isExists(id)){
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    customersDto.setId(id);
+    CustomersEntity customerEntity =  customersMapper.mapFrom(customersDto);
+    CustomersEntity savedCustomerEntity = customerService.createCustomer(customerEntity);
+
+    return new ResponseEntity<>(customersMapper.mapTo(savedCustomerEntity), HttpStatus.OK);
+
+    }
+
+    @DeleteMapping(path = "/customers/{id}")
+    public ResponseEntity deleteCustomer(@PathVariable("id") Long id){
+        customerService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
